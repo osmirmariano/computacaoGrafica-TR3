@@ -10,18 +10,35 @@
 #include <Jpeg.hpp>
 #include <Vcl.ExtCtrls.hpp>
 #include <Vcl.ComCtrls.hpp>
+#include <Vcl.Buttons.hpp>
+#include <Vcl.ActnPopup.hpp>
+#include <Vcl.Menus.hpp>
+#include <Vcl.PlatformDefaultStyleActnCtrls.hpp>
+#include <Vcl.CustomizeDlg.hpp>
+#include <Vcl.CheckLst.hpp>
+#include <Vcl.CategoryButtons.hpp>
+#include <Vcl.Grids.hpp>
+#include <Vcl.ValEdit.hpp>
+#include <Vcl.Graphics.hpp>
 //---------------------------------------------------------------------------
 class TForm3 : public TForm
 {
 __published:	// IDE-managed Components
 	TImage *Image1;
-	TButton *Button1;
-	TButton *Button2;
-	void __fastcall Button2MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
-          int X, int Y);
+	TSpeedButton *SpeedButton1;
+	TSpeedButton *SpeedButton2;
+	TComboBox *ComboBox1;
+	TLabel *Label2;
+	TLabel *Label3;
+	TTrackBar *TrackBar1;
+	TImage *Image2;
+	TLabel *Label15;
+	TLabel *Label16;
+	TLabel *Label17;
 	void __fastcall Button1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
 		  int X, int Y);
 	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall SpeedButton1Click(TObject *Sender);
 private:	// User declarations
 	int tom;
 	int valor;

@@ -8,7 +8,7 @@
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm3 *Form3;
-Graphics::TBitmap * pict = new Graphics::TBitmap();
+
 //---------------------------------------------------------------------------
 __fastcall TForm3::TForm3(TComponent* Owner)
 	: TForm(Owner)
@@ -16,20 +16,17 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 	//Mudar a cor do Formulário
 	Form3->Color = clWhite;
 	TColor cor;
+	ComboBox1->Items->Add("4 Cores");
+	ComboBox1->Items->Add("8 Cores");
+	ComboBox1->Items->Add("16 Cores");
+	SpeedButton2->Enabled = false;
+	ComboBox1->Enabled = false;
+	TrackBar1->Enabled = false;
 }
 //---------------------------------------------------------------------------
 
 
 //Função para carregar a imagem
-void __fastcall TForm3::Button2MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
-          int X, int Y)
-{
-	Image1->Picture->LoadFromFile("C:\\praia.jpg"); // Carregando imagem
-	Image1->Stretch = true; //redimensiona
-	Image1->Refresh(); //atualiza
-	//Image1->Picture->Bitmap->Canvas->Pixels[X][Y] = clRed;
-}
-//---------------------------------------------------------------------------
 
 
 //----------------------------------------------------------------------------
@@ -99,3 +96,26 @@ int TForm3::CalcularCor2(RGBTRIPLE* pixel){
 	 valor = ((R+G+B)/3);
 	 ShowMessage("VALOR DA COR: " + valor) ;
 }
+
+void __fastcall TForm3::SpeedButton1Click(TObject *Sender)
+{
+
+	Image1->Picture->LoadFromFile("C:\\praia.jpg"); // Carregando imagem
+	Image1->Stretch = true; //redimensiona
+	Image1->Refresh(); //atualiza
+	SpeedButton2->Enabled = true;
+	ComboBox1->Enabled = true;
+	TrackBar1->Enabled = true;
+	//Image1->Picture->Bitmap->Canvas->Pixels[X][Y] = clRed;
+
+}
+//---------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
