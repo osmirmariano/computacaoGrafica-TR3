@@ -1484,6 +1484,21 @@ object Form3: TForm3
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object SpeedButton3: TSpeedButton
+    Left = 584
+    Top = 337
+    Width = 105
+    Height = 32
+    Cursor = crHandPoint
+    Caption = 'Tom de Cinza'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    OnClick = SpeedButton3Click
+  end
   object ComboBox1: TComboBox
     Left = 545
     Top = 211
@@ -1497,10 +1512,11 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 0
     Text = 'Selecione uma op'#231#227'o'
+    OnChange = ComboBox1Change
   end
   object TrackBar1: TTrackBar
-    Left = 545
-    Top = 296
+    Left = 537
+    Top = 286
     Width = 186
     Height = 45
     TabOrder = 1

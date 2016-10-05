@@ -16,9 +16,9 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 	//Mudar a cor do Formulário
 	Form3->Color = clWhite;
 	TColor cor;
-	ComboBox1->Items->Add("4 Cores");
-	ComboBox1->Items->Add("8 Cores");
-	ComboBox1->Items->Add("16 Cores");
+	ComboBox1->Items->Add("4");
+	ComboBox1->Items->Add("8");
+	ComboBox1->Items->Add("16");
 	SpeedButton2->Enabled = false;
 	ComboBox1->Enabled = false;
 	TrackBar1->Enabled = false;
@@ -34,7 +34,7 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 void __fastcall TForm3::Button1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
 		  int X, int Y)
 {
-	Image1->Picture->LoadFromFile("C:\\praia.jpg"); // Carregando imagem
+	Image1->Picture->LoadFromFile("cg.bmp"); // Carregando imagem
 	Image1->Stretch = true; //redimensiona
 	Image1->Refresh(); //atualiza
 	//ShowMessage("Largura: " + IntToStr(Image1->Width) + " Altura: " + IntToStr(Image1->Height));
@@ -61,7 +61,7 @@ void __fastcall TForm3::Button1MouseDown(TObject *Sender, TMouseButton Button, T
 		}
 	}
 	ShowMessage("CONTADOR: " + IntToStr(cont));
-	Bmp->SaveToFile("C:\praia1.jpg");
+   //	Bmp->SaveToFile("C:\praia1.jpg");
 
 	//Image1->Picture->Assign(Bmp);
 	//Image1->Picture->LoadFromFile("C:\\C:\Users\osmir\Dropbox\Ciência da Computação\5 Período\Computação Gráfica\Trabalho Redução Números de Cores\Win32\Debug.praia1.jpg"); // Carregando imagem
@@ -80,27 +80,10 @@ void __fastcall TForm3::Button1Click(TObject *Sender)
 //---------------------------------------------------------------------------
 
 
-int TForm3::CalcularCor(RGBTRIPLE* pixel){
- int R = pixel->rgbtRed;
- int G = pixel->rgbtGreen;
- int B = pixel->rgbtBlue;
-
-  return ((R*0.21)+(G*0.72)+(B*0.07));
-
-}
-
-int TForm3::CalcularCor2(RGBTRIPLE* pixel){
-	 int R = pixel->rgbtRed;
-	 int G = pixel->rgbtGreen;
-	 int B = pixel->rgbtBlue;
-	 valor = ((R+G+B)/3);
-	 ShowMessage("VALOR DA COR: " + valor) ;
-}
 
 void __fastcall TForm3::SpeedButton1Click(TObject *Sender)
 {
-
-	Image1->Picture->LoadFromFile("C:\\praia.jpg"); // Carregando imagem
+	Image1->Picture->LoadFromFile("cg.bmp"); // Carregando imagem
 	Image1->Stretch = true; //redimensiona
 	Image1->Refresh(); //atualiza
 	SpeedButton2->Enabled = true;
@@ -113,9 +96,76 @@ void __fastcall TForm3::SpeedButton1Click(TObject *Sender)
 
 
 
+void __fastcall TForm3::ComboBox1Change(TObject *Sender)
+{
+	AnsiString recebe;
+	recebe = ComboBox1->Text;
+	if(recebe == "4"){
+		ShowMessage("4");
+	}
+	else if(recebe == "8"){
+		ShowMessage("8");
+	}
+	else if(recebe == "16"){
+		ShowMessage("16");
+	}
+}
+//---------------------------------------------------------------------------
 
 
+int CalcularCor(RGBTRIPLE* pixel){
+	int R = pixel->rgbtRed;
+	int G = pixel->rgbtGreen;
+	int B = pixel->rgbtBlue;
 
+  return ((R*0.21)+(G*0.72)+(B*0.07));
+
+}
+
+int CalcularCor2(RGBTRIPLE* pixel){
+	 int valor;
+	 int R = pixel->rgbtRed;
+	 int G = pixel->rgbtGreen;
+	 int B = pixel->rgbtBlue;
+	 valor = ((R+G+B)/3);
+	 ShowMessage("VALOR DA COR: " + valor) ;
+}
+
+void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
+{
+
+	Graphics::TBitmap *Bmp = new Graphics::TBitmap;
+	Bmp = Image1->Picture->Bitmap; //Apontando para o endereço da imagem
+	float Luminosidade;
+	//Luminosidade = R*0.3 + G*0.59 + B *0.11;
+	int R,G,B, L;
+
+	ShowMessage("Largura: " + IntToStr(Image1->Width));
+	ShowMessage(" Altura: " + IntToStr(Image1->Height));
+	for(int i = 0; i < IntToStr(Image1->Width); i++) {
+		for(int j = 0; j < IntToStr(Image1->Height); j++)
+		{
+			cor = Image1->Canvas->Pixels[i][j];
+			R = GetRValue(cor);  //Retorna Intensidade de cor vermelha
+			G = GetGValue(cor);  //Retorna Intensidade de cor Verde
+			B = GetBValue(cor);  //Retorna Intensidade de cor azul
+			L=0.299*R + 0.587*G + 0.114*B;
+
+			Image1->Canvas->Pixels[i][j] = RGB(3,5,255);
+			//cont++;
+		}
+	}
+
+	//Image1->Picture->Assign(Bmp);
+	//Image1->Picture->LoadFromFile("C:\\C:\Users\osmir\Dropbox\Ciência da Computação\5 Período\Computação Gráfica\Trabalho Redução Números de Cores\Win32\Debug.praia1.jpg"); // Carregando imagem
+	//Image1->Stretch = true; //redimensiona
+	//Image1->Refresh(); //atualiza
+
+	TrackBar1->Max = 255;
+	TrackBar1->Min = 0;
+
+}
+//---------------------------------------------------------------------------
 
 
 
