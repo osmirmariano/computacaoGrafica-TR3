@@ -30,7 +30,6 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 	SpeedButton3->Enabled = false;
 	ComboBox1->Enabled = false;
 	TrackBar1->Enabled = false;
-	tom = (TrackBar1->Max/2);
 }
 //---------------------------------------------------------------------------
 
@@ -81,8 +80,7 @@ int TForm3::CalcularCor(RGBTRIPLE* pixel){
 	int R = pixel->rgbtRed;
 	int G = pixel->rgbtGreen;
 	int B = pixel->rgbtBlue;
-
-	return ((R*0.21)+(G*0.72)+(B*0.07));
+	return ((R*0.3) + (G*0.59) + (B *0.11));
 }
 
  int TForm3::CalcularCor2(RGBTRIPLE* pixel){
@@ -95,9 +93,9 @@ int TForm3::CalcularCor(RGBTRIPLE* pixel){
 
 void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
 {
-	Graphics::TBitmap *Bmp = new Graphics::TBitmap;
-	Bmp = Image1->Picture->Bitmap; //Apontando para o endereço da imagem
-	int R,G,B, L;
+	//Graphics::TBitmap *cinza = new Graphics::TBitmap;
+	//cinza = Image1->Picture->Bitmap; //Apontando para o endereço da imagem
+	int R, G, B, L;
 
 	for(int x = 0; x < IntToStr(Image1->Width); x++) {
 		for(int y = 0; y < IntToStr(Image1->Height); y++)
@@ -111,14 +109,71 @@ void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
 			} else if (L > 255) {
 				L = 255;
 			}
-			L = R*0.3 + G*0.59 + B *0.11;
+			L = ((R*0.3) + (G*0.59) + (B *0.11));
 			Image1->Canvas->Pixels[x][y] = RGB(L,L,L);
 		}
 	}
+
 }
 //---------------------------------------------------------------------------
 
 
+
+
+void __fastcall TForm3::TrackBar1Change(TObject *Sender)
+{
+	 //TrackBar1->Max = 255;
+	 //TrackBar1->Min = 0;
+	 //TrackBar1->Position  = TrackBar1->Max/2;
+
+	 Graphics::TBitmap *escalaCinza = new Graphics::TBitmap;
+	 escalaCinza->LoadFromFile("cg.bmp");
+	 RGBTRIPLE *resultado;
+	 int posicao, novaLuminosidade, R, G, B;
+	 posicao = TrackBar1->Position;
+	 if (posicao < tonalidade) {
+		  tonalidade = posicao;
+		  posicao = posicao-TrackBar1->Max;
+	 }else{
+		 tonalidade = posicao;
+	 }
+
+	 for (int y = 0; y < Image1->Height; y++) {
+		resultado = (RGBTRIPLE*)escalaCinza->ScanLine[y];
+		//r = (RGBTRIPLE*)b;
+		for (int x = 0; x < Image1->Width; x++) {
+			//cor = Image1->Canvas->Pixels[x][y];
+			//R = GetRValue(cor);  //Retorna Intensidade de cor vermelha
+			//G = GetGValue(cor);  //Retorna Intensidade de cor Verde
+			//B = GetBValue(cor);  //Retorna Intensidade de cor azul
+			//novaLuminosidade = ((R*0.3) + (G*0.59) + (B *0.11));
+
+			novaLuminosidade = CalcularCor(resultado);
+			novaLuminosidade = novaLuminosidade + posicao;
+			//Verificando se está entre o intervalo de 0 à 255
+			if (novaLuminosidade > 255){
+				novaLuminosidade = 255;
+			}
+			if (novaLuminosidade < 0){
+				novaLuminosidade = 0;
+			}
+			//Image1->Canvas->Pixels[x][y] = RGB(novaLuminosidade,novaLuminosidade,novaLuminosidade);
+			resultado->rgbtRed = novaLuminosidade;
+			resultado->rgbtGreen = novaLuminosidade;
+			resultado->rgbtBlue = novaLuminosidade;
+			resultado++;
+		}
+	 }
+	 Image1->Picture->Assign(escalaCinza);
+	 delete escalaCinza;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::SpeedButton6Click(TObject *Sender)
+{
+	Form3->Close();
+}
+//---------------------------------------------------------------------------
 
 void __fastcall TForm3::SpeedButton2Click(TObject *Sender)
 {
@@ -136,54 +191,6 @@ void __fastcall TForm3::SpeedButton2Click(TObject *Sender)
 			}
 		}
 	}
-
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TForm3::TrackBar1Change(TObject *Sender)
-{
-	TrackBar1->Max = 255;
-	TrackBar1->Min = 0;
-	TrackBar1->Position  = TrackBar1->Max/2;
-
-	Graphics::TBitmap *copia = new Graphics::TBitmap;
-	copia->LoadFromFile("cg.bmp");
-
-	 RGBTRIPLE *r;
-	 int tb, tt;
-	 tb = TrackBar1->Position;
-	 if (tb < tom) {
-		  tom = tb;
-		  tb = tb - TrackBar1->Max;
-	 }else{
-		 tom = tb;
-	 }
-
-	 for (int y = 0; y < Image1->Height; y++) {
-		r = (RGBTRIPLE*)copia->ScanLine[y];
-		for (int x = 0; x < Image1->Width; x++) {
-			tt = CalcularCor(r);
-			tt =tt+(tb);
-			if (tt>255){
-				tt= 255;
-			}
-			if (tt<0){
-				tt=0;
-			}
-			r->rgbtRed = tt;
-			r->rgbtGreen = tt;
-			r->rgbtBlue = tt;
-			r++;
-		}
-	 }
-	 Image1->Picture->Assign(copia);
-   //delete copia;
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TForm3::SpeedButton6Click(TObject *Sender)
-{
-	Form3->Close();
 }
 //---------------------------------------------------------------------------
 

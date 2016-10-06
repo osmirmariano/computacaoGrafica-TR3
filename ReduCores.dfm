@@ -1677,7 +1677,7 @@ object Form3: TForm3
     Top = 342
     Width = 177
     Height = 45
-    Cursor = crHandPoint
+    Cursor = crHSplit
     TabOrder = 1
     OnChange = TrackBar1Change
   end

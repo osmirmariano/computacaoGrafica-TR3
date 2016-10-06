@@ -43,15 +43,15 @@ __published:	// IDE-managed Components
 	void __fastcall SpeedButton1Click(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);
 	void __fastcall SpeedButton3Click(TObject *Sender);
-	void __fastcall SpeedButton2Click(TObject *Sender);
 	void __fastcall TrackBar1Change(TObject *Sender);
 	void __fastcall SpeedButton6Click(TObject *Sender);
+	void __fastcall SpeedButton2Click(TObject *Sender);
 private:	// User declarations
-	int tom;
+	int tonalidade;
 	int valor;
 	TColor cor;
 public:		// User declarations
-	//int tonalidade;
+
 	__fastcall TForm3(TComponent* Owner);
 	int TForm3::CalcularCor2(RGBTRIPLE* pixel);
 	int TForm3::CalcularCor(RGBTRIPLE* pixel);
