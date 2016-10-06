@@ -1,0 +1,232 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include <jpeg.hpp>
+#include <Printers.hpp>
+#include <Windows.h>
+#include <stdlib.h>
+#include <algorithm>
+
+#include "ReduCores.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm3 *Form3;
+
+//---------------------------------------------------------------------------
+__fastcall TForm3::TForm3(TComponent* Owner)
+	: TForm(Owner)
+{
+	//Mudar a cor do Formulário
+	Form3->Color = clWhite;
+	TColor cor;
+	ComboBox1->Items->Add("4");
+	ComboBox1->Items->Add("8");
+	ComboBox1->Items->Add("16");
+	SpeedButton2->Enabled = false;
+	SpeedButton3->Enabled = false;
+	ComboBox1->Enabled = false;
+	TrackBar1->Enabled = false;
+	tom = (TrackBar1->Max/2);
+}
+//---------------------------------------------------------------------------
+std::auto_ptr<Graphics::TBitmap> bitmap2(new Graphics::TBitmap);
+Graphics::TBitmap *imagem = new Graphics::TBitmap();
+RGBTRIPLE *t;
+
+//----------------------------------------------------------------------------
+
+
+
+
+void __fastcall TForm3::Button1Click(TObject *Sender)
+{
+	//Graphics::TBitmap * copia = new Graphics::TBitmap();
+
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TForm3::SpeedButton1Click(TObject *Sender)
+{
+	Image1->Picture->LoadFromFile("cg.bmp"); // Carregando imagem
+	Image1->Stretch = true; //redimensiona
+	Image1->Refresh(); //atualiza
+	SpeedButton2->Enabled = true;
+	ComboBox1->Enabled = true;
+	TrackBar1->Enabled = true;
+	SpeedButton3->Enabled = true;
+
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TForm3::ComboBox1Change(TObject *Sender)
+{
+	AnsiString recebe;
+	recebe = ComboBox1->Text;
+	if(recebe == "4"){
+		ShowMessage("4");
+	}
+	else if(recebe == "8"){
+		ShowMessage("8");
+	}
+	else if(recebe == "16"){
+		ShowMessage("16");
+	}
+}
+//---------------------------------------------------------------------------
+
+
+int TForm3::CalcularCor(RGBTRIPLE* pixel){
+
+
+    Graphics::TBitmap *copia = new Graphics::TBitmap;
+	copia->LoadFromFile("cg.bmp");
+	copia->Assign(Image1);
+	RGBTRIPLE *r;
+	int  tb, tt;
+	tb = TrackBar1->Position;
+	if (tb < tom) {
+	  tom = tb;
+	  tb = tb - TrackBar1->Max;
+   }else{
+	 tom = tb;
+   }
+
+   for (int y = 0; y < Image1->Height; y++) {
+		   //	r = (RGBTRIPLE*)copia->ScanLine[y];
+			int R = pixel->rgbtRed;
+			int G = pixel->rgbtGreen;
+			int B = pixel->rgbtBlue;
+
+			int resultado = ((R*0.21)+(G*0.72)+(B*0.07));
+			for (int x = 0; x < Image1->Width; x++) {
+				tt = CalcularCor(r);
+				tt =tt+(tb);
+				if (tt>255){tt= 255;}
+				if (tt<0){tt=0;}
+				r->rgbtRed = tt;
+				r->rgbtGreen = tt;
+				r->rgbtBlue = tt;
+				r++;
+			}
+		 }
+		 Image1->Picture->Bitmap = copia;
+		delete copia;
+
+}
+
+ int TForm3::CalcularCor2(RGBTRIPLE* pixel){
+	 int R = pixel->rgbtRed;
+	 int G = pixel->rgbtGreen;
+	 int B = pixel->rgbtBlue;
+
+	  return (R+G+B/3);
+}
+
+void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
+{
+	Graphics::TBitmap *Bmp = new Graphics::TBitmap;
+	Bmp = Image1->Picture->Bitmap; //Apontando para o endereço da imagem
+	int R,G,B, L;
+
+	for(int x = 0; x < IntToStr(Image1->Width); x++) {
+		for(int y = 0; y < IntToStr(Image1->Height); y++)
+		{
+			cor = Image1->Canvas->Pixels[x][y];
+			R = GetRValue(cor);  //Retorna Intensidade de cor vermelha
+			G = GetGValue(cor);  //Retorna Intensidade de cor Verde
+			B = GetBValue(cor);  //Retorna Intensidade de cor azul
+			if (L < 0) {
+				L = 0;
+			} else if (L > 255) {
+				L = 255;
+			}
+			L = R*0.3 + G*0.59 + B *0.11;
+			Image1->Canvas->Pixels[x][y] = RGB(L,L,L);
+		}
+	}
+	TrackBar1->Position  = TrackBar1->Max/2;
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TForm3::SpeedButton2Click(TObject *Sender)
+{
+	Graphics::TBitmap *copia = new Graphics::TBitmap;
+	copia->LoadFromFile("cg.bmp");
+	int f =0;
+	for (int y = 0; y < Image1->Height; y++) {
+			//int t = (RGBTRIPLE*)Image1->Picture->Bitmap->ScanLine[y];
+			//t = (RGBTRIPLE *)Image1->Picture->Bitmap;
+			t = (RGBTRIPLE*)copia->ScanLine[y];
+			for (int x = 0; x < Image1->Width; x++) {
+				f = CalcularCor2(t);
+				if(f>127){
+					t->rgbtRed = 255;
+					t->rgbtGreen = 255;
+					t->rgbtBlue = 255;
+					t++;
+				}
+				if(f<128){
+					t->rgbtRed = 0;
+					t->rgbtGreen = 0;
+					t->rgbtBlue = 0;
+					t++;
+				}
+			}
+		 }
+		 Image1->Picture->Bitmap = copia;
+		delete copia;
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::TrackBar1Change(TObject *Sender)
+{
+	TrackBar1->Max = 255;
+	TrackBar1->Min = 0;
+
+	Graphics::TBitmap *copia = new Graphics::TBitmap;
+	copia->LoadFromFile("cg.bmp");
+	copia->Assign(Image1);
+	RGBTRIPLE *r;
+	int  tb, tt;
+	tb = TrackBar1->Position;
+	if (tb < tom) {
+	  tom = tb;
+	  tb = tb - TrackBar1->Max;
+   }else{
+	 tom = tb;
+   }
+
+   for (int y = 0; y < Image1->Height; y++) {
+			r = (RGBTRIPLE*)copia->ScanLine[y];
+			for (int x = 0; x < Image1->Width; x++) {
+				tt = CalcularCor(r);
+				tt =tt+(tb);
+				if (tt>255){tt= 255;}
+				if (tt<0){tt=0;}
+				r->rgbtRed = tt;
+				r->rgbtGreen = tt;
+				r->rgbtBlue = tt;
+				r++;
+			}
+		 }
+		 Image1->Picture->Bitmap = copia;
+		delete copia;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::SpeedButton6Click(TObject *Sender)
+{
+	Form3->Close();
+}
+//---------------------------------------------------------------------------
+

@@ -36,14 +36,14 @@ __published:	// IDE-managed Components
 	TLabel *Label16;
 	TLabel *Label17;
 	TSpeedButton *SpeedButton3;
-	void __fastcall Button1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
-		  int X, int Y);
+	TSpeedButton *SpeedButton6;
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall SpeedButton1Click(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);
 	void __fastcall SpeedButton3Click(TObject *Sender);
 	void __fastcall SpeedButton2Click(TObject *Sender);
 	void __fastcall TrackBar1Change(TObject *Sender);
+	void __fastcall SpeedButton6Click(TObject *Sender);
 private:	// User declarations
 	int tom;
 	int valor;
