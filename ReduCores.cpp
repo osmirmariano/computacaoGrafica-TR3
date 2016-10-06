@@ -4,10 +4,6 @@
 #pragma hdrstop
 
 #include <jpeg.hpp>
-#include <Printers.hpp>
-#include <Windows.h>
-#include <stdlib.h>
-#include <algorithm>
 #include <math.h>
 
 #include "ReduCores.h"
@@ -87,8 +83,7 @@ int TForm3::CalcularCor(RGBTRIPLE* pixel){
 	 int R = pixel->rgbtRed;
 	 int G = pixel->rgbtGreen;
 	 int B = pixel->rgbtBlue;
-
-	  return (R+G+B/3);
+	 return (R+G+B/3);
 }
 
 void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
@@ -113,19 +108,15 @@ void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
 			Image1->Canvas->Pixels[x][y] = RGB(L,L,L);
 		}
 	}
+	TrackBar1->Max = 255;
+	TrackBar1->Min = 0;
+	TrackBar1->Position  = 127;
 
 }
+
 //---------------------------------------------------------------------------
-
-
-
-
 void __fastcall TForm3::TrackBar1Change(TObject *Sender)
 {
-	 //TrackBar1->Max = 255;
-	 //TrackBar1->Min = 0;
-	 //TrackBar1->Position  = TrackBar1->Max/2;
-
 	 Graphics::TBitmap *escalaCinza = new Graphics::TBitmap;
 	 escalaCinza->LoadFromFile("cg.bmp");
 	 RGBTRIPLE *resultado;
@@ -138,10 +129,10 @@ void __fastcall TForm3::TrackBar1Change(TObject *Sender)
 		 tonalidade = posicao;
 	 }
 
-	 for (int y = 0; y < Image1->Height; y++) {
+	 for (int y = 0; y < escalaCinza->Height; y++) {
 		resultado = (RGBTRIPLE*)escalaCinza->ScanLine[y];
 		//r = (RGBTRIPLE*)b;
-		for (int x = 0; x < Image1->Width; x++) {
+		for (int x = 0; x < escalaCinza->Width; x++) {
 			//cor = Image1->Canvas->Pixels[x][y];
 			//R = GetRValue(cor);  //Retorna Intensidade de cor vermelha
 			//G = GetGValue(cor);  //Retorna Intensidade de cor Verde
