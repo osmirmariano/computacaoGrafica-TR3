@@ -156,7 +156,7 @@ void __fastcall TForm3::TrackBar1Change(TObject *Sender)
 
 
 	Graphics::TBitmap *copia = new Graphics::TBitmap;
-	//copia->LoadFromFile("cg.bmp");
+	copia->LoadFromFile("cg.bmp");
 	//copia->Assign(Image1);
 	RGBTRIPLE *r;
 	int  tb, tt;
@@ -169,20 +169,20 @@ void __fastcall TForm3::TrackBar1Change(TObject *Sender)
    }
 
    for (int y = 0; y < Image1->Width; y++) {
-			//r = (RGBTRIPLE*)copia->ScanLine[y];
-			for (int x = 0; x < Image1->Height; x++) {
-				tt = CalcularCor((RGBTRIPLE*)y);
-				tt =tt+(tb);
-				if (tt>255){tt= 255;}
-				if (tt<0){tt=0;}
-				//r->rgbtRed = tt;
-				//r->rgbtGreen = tt;
-				//r->rgbtBlue = tt;
-				//r++;
-			}
-		 }
-		 Image1->Picture->Bitmap = copia;
-		delete copia;
+		r = (RGBTRIPLE*)copia->ScanLine[y];
+		for (int x = 0; x < Image1->Height; x++) {
+			tt = CalcularCor((RGBTRIPLE*)y);
+			tt =tt+(tb);
+			if (tt>255){tt= 255;}
+			if (tt<0){tt=0;}
+			r->rgbtRed = tt;
+			r->rgbtGreen = tt;
+			r->rgbtBlue = tt;
+			r++;
+		}
+   }
+   Image1->Picture->Bitmap = copia;
+   delete copia;
 }
 //---------------------------------------------------------------------------
 
