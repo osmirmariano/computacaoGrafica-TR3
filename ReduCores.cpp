@@ -33,14 +33,6 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 	tom = (TrackBar1->Max/2);
 }
 //---------------------------------------------------------------------------
-std::auto_ptr<Graphics::TBitmap> bitmap2(new Graphics::TBitmap);
-Graphics::TBitmap *imagem = new Graphics::TBitmap();
-RGBTRIPLE *t;
-
-//----------------------------------------------------------------------------
-
-
-
 
 void __fastcall TForm3::Button1Click(TObject *Sender)
 {
@@ -123,7 +115,6 @@ void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
 			Image1->Canvas->Pixels[x][y] = RGB(L,L,L);
 		}
 	}
-	TrackBar1->Position  = TrackBar1->Max/2;
 }
 //---------------------------------------------------------------------------
 
@@ -153,36 +144,40 @@ void __fastcall TForm3::TrackBar1Change(TObject *Sender)
 {
 	TrackBar1->Max = 255;
 	TrackBar1->Min = 0;
-
+	TrackBar1->Position  = TrackBar1->Max/2;
 
 	Graphics::TBitmap *copia = new Graphics::TBitmap;
 	copia->LoadFromFile("cg.bmp");
-	//copia->Assign(Image1);
-	RGBTRIPLE *r;
-	int  tb, tt;
-	tb = TrackBar1->Position;
-	if (tb < tom) {
-	  tom = tb;
-	  tb = tb - TrackBar1->Max;
-   }else{
-	 tom = tb;
-   }
 
-   for (int y = 0; y < Image1->Width; y++) {
+	 RGBTRIPLE *r;
+	 int tb, tt;
+	 tb = TrackBar1->Position;
+	 if (tb < tom) {
+		  tom = tb;
+		  tb = tb - TrackBar1->Max;
+	 }else{
+		 tom = tb;
+	 }
+
+	 for (int y = 0; y < Image1->Height; y++) {
 		r = (RGBTRIPLE*)copia->ScanLine[y];
-		for (int x = 0; x < Image1->Height; x++) {
-			tt = CalcularCor((RGBTRIPLE*)y);
+		for (int x = 0; x < Image1->Width; x++) {
+			tt = CalcularCor(r);
 			tt =tt+(tb);
-			if (tt>255){tt= 255;}
-			if (tt<0){tt=0;}
+			if (tt>255){
+				tt= 255;
+			}
+			if (tt<0){
+				tt=0;
+			}
 			r->rgbtRed = tt;
 			r->rgbtGreen = tt;
 			r->rgbtBlue = tt;
 			r++;
 		}
-   }
-   Image1->Picture->Bitmap = copia;
-   delete copia;
+	 }
+	 Image1->Picture->Assign(copia);
+   //delete copia;
 }
 //---------------------------------------------------------------------------
 
