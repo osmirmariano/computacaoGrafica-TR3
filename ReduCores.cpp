@@ -55,6 +55,7 @@ void __fastcall TForm3::SpeedButton1Click(TObject *Sender)
 {
 	Image1->Picture->LoadFromFile("cg.bmp"); // Carregando imagem
 	//Image1->Picture->LoadFromFile("mu.bmp");
+	//Image1->Picture->LoadFromFile("pr.bmp"); // Carregando imagem
 	Image1->Stretch = true; //redimensiona
 	Image1->Refresh(); //atualiza
 	SpeedButton2->Enabled = true;
@@ -131,19 +132,19 @@ void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
 void __fastcall TForm3::SpeedButton2Click(TObject *Sender)
 {
 	for (int y = 0; y < Image1->Height; y++) {
-			for (int x = 0; x < Image1->Width; x++) {
-				cor = Image1->Canvas->Pixels[x][y];
-				int R = GetRValue(cor);  //Retorna Intensidade de cor vermelha
-				int G = GetGValue(cor);  //Retorna Intensidade de cor Verde
-				int B = GetBValue(cor);
-				if(R > 100 && R <= 255 && G > 100 && G <= 255 && B > 100 && B <= 255){
-				   Image1->Canvas->Pixels[x][y] = RGB(255,255,255);
-				}
-				else{
-					Image1->Canvas->Pixels[x][y] = RGB(0,0,0);
-				}
+		for (int x = 0; x < Image1->Width; x++) {
+			cor = Image1->Canvas->Pixels[x][y];
+			int R = GetRValue(cor);  //Retorna Intensidade de cor vermelha
+			int G = GetGValue(cor);  //Retorna Intensidade de cor Verde
+			int B = GetBValue(cor);
+			if(R > 100 && R <= 255 && G > 100 && G <= 255 && B > 100 && B <= 255){
+			   Image1->Canvas->Pixels[x][y] = RGB(255,255,255);
 			}
-		 }
+			else{
+				Image1->Canvas->Pixels[x][y] = RGB(0,0,0);
+			}
+		}
+	}
 
 }
 //---------------------------------------------------------------------------
@@ -153,8 +154,9 @@ void __fastcall TForm3::TrackBar1Change(TObject *Sender)
 	TrackBar1->Max = 255;
 	TrackBar1->Min = 0;
 
+
 	Graphics::TBitmap *copia = new Graphics::TBitmap;
-	copia->LoadFromFile("cg.bmp");
+	//copia->LoadFromFile("cg.bmp");
 	//copia->Assign(Image1);
 	RGBTRIPLE *r;
 	int  tb, tt;
@@ -166,17 +168,17 @@ void __fastcall TForm3::TrackBar1Change(TObject *Sender)
 	 tom = tb;
    }
 
-   for (int y = 0; y < Image1->Height; y++) {
-			r = (RGBTRIPLE*)copia->ScanLine[y];
-			for (int x = 0; x < Image1->Width; x++) {
-				tt = CalcularCor(r);
+   for (int y = 0; y < Image1->Width; y++) {
+			//r = (RGBTRIPLE*)copia->ScanLine[y];
+			for (int x = 0; x < Image1->Height; x++) {
+				tt = CalcularCor((RGBTRIPLE*)y);
 				tt =tt+(tb);
 				if (tt>255){tt= 255;}
 				if (tt<0){tt=0;}
-				r->rgbtRed = tt;
-				r->rgbtGreen = tt;
-				r->rgbtBlue = tt;
-				r++;
+				//r->rgbtRed = tt;
+				//r->rgbtGreen = tt;
+				//r->rgbtBlue = tt;
+				//r++;
 			}
 		 }
 		 Image1->Picture->Bitmap = copia;

@@ -24,6 +24,7 @@ object Form3: TForm3
     Top = 24
     Width = 100
     Height = 41
+    Cursor = crHandPoint
     Caption = 'Imagem'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBtnText
@@ -95,6 +96,7 @@ object Form3: TForm3
     Top = 110
     Width = 169
     Height = 41
+    Cursor = crHandPoint
     Caption = 'Preto/Branco'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -1626,10 +1628,11 @@ object Form3: TForm3
     Left = 545
     Top = 211
     Width = 169
-    Height = 24
+    Height = 26
+    Cursor = crHandPoint
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -13
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
@@ -1642,6 +1645,7 @@ object Form3: TForm3
     Top = 286
     Width = 177
     Height = 45
+    Cursor = crHandPoint
     TabOrder = 1
     OnChange = TrackBar1Change
   end
