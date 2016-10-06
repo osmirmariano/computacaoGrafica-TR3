@@ -37,6 +37,8 @@ __published:	// IDE-managed Components
 	TLabel *Label17;
 	TSpeedButton *SpeedButton3;
 	TSpeedButton *SpeedButton6;
+	TLabel *Label1;
+	TLabel *Label4;
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall SpeedButton1Click(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);

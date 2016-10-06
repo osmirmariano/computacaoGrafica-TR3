@@ -2,8 +2,8 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Computa'#231#227'o Gr'#225'fica, Trabalho 3 redu'#231#227'o do n'#250'mero de cores'
-  ClientHeight = 539
-  ClientWidth = 739
+  ClientHeight = 579
+  ClientWidth = 751
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,13 @@ object Form3: TForm3
   TextHeight = 13
   object Image1: TImage
     Left = 32
-    Top = 56
+    Top = 96
     Width = 473
     Height = 369
   end
   object SpeedButton1: TSpeedButton
     Left = 545
-    Top = 24
+    Top = 96
     Width = 100
     Height = 41
     Cursor = crHandPoint
@@ -93,7 +93,7 @@ object Form3: TForm3
   end
   object SpeedButton2: TSpeedButton
     Left = 545
-    Top = 110
+    Top = 166
     Width = 169
     Height = 41
     Cursor = crHandPoint
@@ -165,25 +165,27 @@ object Form3: TForm3
   end
   object Label2: TLabel
     Left = 545
-    Top = 184
+    Top = 237
     Width = 169
     Height = 16
     Caption = 'Redu'#231#227'o N'#250'mero de cores'
+    Color = clGray
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
+    Font.Color = clHotLight
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
   end
   object Label3: TLabel
     Left = 545
-    Top = 264
+    Top = 320
     Width = 87
     Height = 16
     Caption = 'Tons de cinza'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
+    Font.Color = clHotLight
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
@@ -191,7 +193,7 @@ object Form3: TForm3
   end
   object Image2: TImage
     Left = 602
-    Top = 426
+    Top = 466
     Width = 129
     Height = 105
     Picture.Data = {
@@ -1450,7 +1452,7 @@ object Form3: TForm3
   end
   object Label15: TLabel
     Left = 460
-    Top = 453
+    Top = 493
     Width = 136
     Height = 14
     Caption = 'PROF. TANILSON DIAS'
@@ -1463,7 +1465,7 @@ object Form3: TForm3
   end
   object Label16: TLabel
     Left = 441
-    Top = 473
+    Top = 513
     Width = 155
     Height = 14
     Caption = 'ALUNO: OSMIR MARIANO'
@@ -1476,7 +1478,7 @@ object Form3: TForm3
   end
   object Label17: TLabel
     Left = 509
-    Top = 493
+    Top = 533
     Width = 87
     Height = 14
     Caption = 'TRABALHO 03'
@@ -1489,7 +1491,7 @@ object Form3: TForm3
   end
   object SpeedButton3: TSpeedButton
     Left = 560
-    Top = 337
+    Top = 393
     Width = 129
     Height = 40
     Cursor = crHandPoint
@@ -1561,7 +1563,7 @@ object Form3: TForm3
   end
   object SpeedButton6: TSpeedButton
     Left = 665
-    Top = 24
+    Top = 96
     Width = 49
     Height = 41
     Cursor = crHandPoint
@@ -1624,9 +1626,39 @@ object Form3: TForm3
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     OnClick = SpeedButton6Click
   end
+  object Label1: TLabel
+    Left = 113
+    Top = 8
+    Width = 532
+    Height = 23
+    Caption = 'IMPLEMENTA'#199#213'ES REDU'#199#195'O DE CORES EM IMAGENS, '
+    Color = clGray
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHotLight
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 199
+    Top = 37
+    Width = 370
+    Height = 23
+    Caption = 'ESCALA DE CINZA E PRETO E BRANCO'
+    Color = clGray
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHotLight
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
   object ComboBox1: TComboBox
     Left = 545
-    Top = 211
+    Top = 259
     Width = 169
     Height = 26
     Cursor = crHandPoint
@@ -1642,7 +1674,7 @@ object Form3: TForm3
   end
   object TrackBar1: TTrackBar
     Left = 537
-    Top = 286
+    Top = 342
     Width = 177
     Height = 45
     Cursor = crHandPoint
