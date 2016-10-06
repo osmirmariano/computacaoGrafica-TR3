@@ -113,22 +113,21 @@ void __fastcall TForm3::ComboBox1Change(TObject *Sender)
 //---------------------------------------------------------------------------
 
 
-int CalcularCor(RGBTRIPLE* pixel){
-	int R = pixel->rgbtRed;
-	int G = pixel->rgbtGreen;
-	int B = pixel->rgbtBlue;
+int TForm3::CalcularCor(RGBTRIPLE* pixel){
+ int R = pixel->rgbtRed;
+ int G = pixel->rgbtGreen;
+ int B = pixel->rgbtBlue;
 
   return ((R*0.21)+(G*0.72)+(B*0.07));
 
 }
 
-int CalcularCor2(RGBTRIPLE* pixel){
-	 int valor;
+ int TForm3::CalcularCor2(RGBTRIPLE* pixel){
 	 int R = pixel->rgbtRed;
 	 int G = pixel->rgbtGreen;
 	 int B = pixel->rgbtBlue;
-	 valor = ((R+G+B)/3);
-	 ShowMessage("VALOR DA COR: " + valor) ;
+
+	  return (R+G+B/3);
 }
 
 void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
@@ -136,12 +135,8 @@ void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
 
 	Graphics::TBitmap *Bmp = new Graphics::TBitmap;
 	Bmp = Image1->Picture->Bitmap; //Apontando para o endereço da imagem
-	float Luminosidade;
-	//Luminosidade = R*0.3 + G*0.59 + B *0.11;
 	int R,G,B, L;
 
-	ShowMessage("Largura: " + IntToStr(Image1->Width));
-	ShowMessage(" Altura: " + IntToStr(Image1->Height));
 	for(int i = 0; i < IntToStr(Image1->Width); i++) {
 		for(int j = 0; j < IntToStr(Image1->Height); j++)
 		{
@@ -149,23 +144,107 @@ void __fastcall TForm3::SpeedButton3Click(TObject *Sender)
 			R = GetRValue(cor);  //Retorna Intensidade de cor vermelha
 			G = GetGValue(cor);  //Retorna Intensidade de cor Verde
 			B = GetBValue(cor);  //Retorna Intensidade de cor azul
-			L=0.299*R + 0.587*G + 0.114*B;
-
-			Image1->Canvas->Pixels[i][j] = RGB(3,5,255);
-			//cont++;
+			if (L < 0) {
+				L = 0;
+			} else if (L > 255) {
+				L = 255;
+			}
+			L = R*0.3 + G*0.59 + B *0.11;
+			Image1->Canvas->Pixels[i][j] = RGB(L,L,L);
 		}
 	}
-
-	//Image1->Picture->Assign(Bmp);
-	//Image1->Picture->LoadFromFile("C:\\C:\Users\osmir\Dropbox\Ciência da Computação\5 Período\Computação Gráfica\Trabalho Redução Números de Cores\Win32\Debug.praia1.jpg"); // Carregando imagem
-	//Image1->Stretch = true; //redimensiona
-	//Image1->Refresh(); //atualiza
-
-	TrackBar1->Max = 255;
-	TrackBar1->Min = 0;
-
+	TrackBar1->Position  = TrackBar1->Max/2 ;
 }
 //---------------------------------------------------------------------------
 
 
+
+void __fastcall TForm3::SpeedButton2Click(TObject *Sender)
+{
+	/*Graphics::TBitmap *Bmp = new Graphics::TBitmap;
+	Bmp = Image1->Picture->Bitmap; //Apontando para o endereço da imagem
+	int R,G,B, L;
+
+	for(int i = 0; i < IntToStr(Image1->Width); i++) {
+		for(int j = 0; j < IntToStr(Image1->Height); j++)
+		{
+			//cor = Image1->Canvas->Pixels[i][j];
+			if(Image1->Canvas->Pixels[i][j] < 100){
+				L = 0*0.3 + 0*0.59 + 0 *0.11;
+				Image1->Canvas->Pixels[i][j] = RGB(L,L,L);
+			}
+			else if (Image1->Canvas->Pixels[i][j] > 100){
+            	L = 255*0.3 + 255*0.59 + 255*0.11;
+				Image1->Canvas->Pixels[i][j] = RGB(L,L,L);
+			}
+
+		}
+	}
+	*/
+	int f =0;
+
+   for (int y = 0; y < Image1->Height; y++) {
+			int t = (RGBTRIPLE*)Image1->Picture->Bitmap->ScanLine[y] ;
+			//int	t = (RGBTRIPLE*)Image1->ScanLine[y];
+			for (int x = 0; x < Image1->Width; x++) {
+			f = CalcularCor2(t);
+
+			if(f>127){
+				t->rgbtRed = 255;
+				t->rgbtGreen = 255;
+				t->rgbtBlue = 255;
+				t++;
+			}
+
+			if(f<128){
+				t->rgbtRed = 0;
+				t->rgbtGreen = 0;
+				t->rgbtBlue = 0;
+				t++;
+			}
+
+			}
+		 }
+		 Image1->Picture->Assign(pict);
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::TrackBar1Change(TObject *Sender)
+{
+	Graphics::TBitmap * copia = new Graphics::TBitmap;
+	copia->Assign(Image1);
+	TrackBar1->Max = 255;
+	TrackBar1->Min = 0;
+	 copia->Assign(Image1);
+	 RGBTRIPLE *r;
+	 int tb, tt;
+	 tb = TrackBar1->Position;
+	   if (tb < tom) {
+		  tom = tb;
+		  tb = tb-TrackBar1->Max;
+	   }else{
+		 tom = tb;
+	   }
+
+	   for (int y = 0; y < Image1->Height; y++) {
+				r = (RGBTRIPLE*)Image1->Picture->Bitmap->ScanLine[y]
+				for (int x = 0; x < Image1->Width; x++) {
+				tt = CalcularCor(r);
+				tt =tt+(tb);
+				if (tt>255){
+					tt= 255;
+				}
+				if (tt<0){
+					tt=0;
+				}
+				r->rgbtRed = tt;
+				r->rgbtGreen = tt;
+				r->rgbtBlue = tt;
+				r++;
+	   }
+	}
+	Image1->Picture->Assign(copia);
+}
+//---------------------------------------------------------------------------
 

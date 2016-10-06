@@ -159,6 +159,7 @@ object Form3: TForm3
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentFont = False
+    OnClick = SpeedButton2Click
   end
   object Label2: TLabel
     Left = 545
@@ -1520,5 +1521,6 @@ object Form3: TForm3
     Width = 186
     Height = 45
     TabOrder = 1
+    OnChange = TrackBar1Change
   end
 end

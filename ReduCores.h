@@ -42,6 +42,8 @@ __published:	// IDE-managed Components
 	void __fastcall SpeedButton1Click(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);
 	void __fastcall SpeedButton3Click(TObject *Sender);
+	void __fastcall SpeedButton2Click(TObject *Sender);
+	void __fastcall TrackBar1Change(TObject *Sender);
 private:	// User declarations
 	int tom;
 	int valor;
